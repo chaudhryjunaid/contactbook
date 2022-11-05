@@ -12,18 +12,22 @@ class ContactBook:
         return f"ContactBook({len(self.contactcards)} ContactCards)"
 
     def __iadd__(self, other):
-        if type(other) == "ContactBook":
+        if isinstance(other, ContactBook):
             self.contactcards += other.contactcards
             return self
-        elif type(other) == "ContactCard":
+        elif isinstance(other, contactcard.ContactCard):
             self.contactcards.append(other)
             return self
+        else:
+            raise ValueError
 
     def __add__(self, other):
-        if type(other) == "ContactBook":
+        if isinstance(other, ContactBook):
             return ContactBook(self.contactcards + other.contactcards)
-        elif type(other) == "ContactCard":
+        elif isinstance(other, contactcard.ContactCard):
             return ContactBook(self.contactcards + [other])
+        else:
+            raise ValueError
 
     def __len__(self):
         return len(self.contactcards)
@@ -46,3 +50,8 @@ if __name__ == '__main__':
     print("str cb:" + str(cb))
     print("repr cb:" + repr(cb))
     cb.list()
+    cb = cb + contactcard.ContactCard("Mike", "mike@att.com", "+123456789")
+    cb.list()
+    cb += cb
+    cb.list()
+
