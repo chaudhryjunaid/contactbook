@@ -1,4 +1,4 @@
-import contactcard
+from contactbook import contactcard
 
 
 class ContactBook:
